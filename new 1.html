@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .sidebar {
+            width: 250px;
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            height: 100vh;
+        }
+        .sidebar h2 {
+            text-align: center;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .sidebar ul li:hover {
+            background: #34495e;
+        }
+        .main {
+            flex-grow: 1;
+            padding: 20px;
+            background: #ecf0f1;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <ul>
+            <li onclick="showContent('home')">Home</li>
+            <li onclick="showContent('analytics')">Analytics</li>
+            <li onclick="showContent('reports')">Reports</li>
+            <li onclick="showContent('settings')">Settings</li>
+        </ul>
+    </div>
+    <div class="main">
+        <h1 id="pageTitle">Welcome to the Dashboard</h1>
+        <div id="home" class="content-section">
+            <p>This is the home section.</p>
+        </div>
+        <div id="analytics" class="content-section" style="display: none;">
+            <p>Analytics data goes here.</p>
+            <div class="card">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+        <div id="reports" class="content-section" style="display: none;">
+            <p>Reports data goes here.</p>
+        </div>
+        <div id="settings" class="content-section" style="display: none;">
+            <p>Settings options go here.</p>
+        </div>
+    </div>
+    <script>
+        function showContent(section) {
+            document.querySelectorAll('.content-section').forEach(el => el.style.display = 'none');
+            document.getElementById(section).style.display = 'block';
+            document.getElementById('pageTitle').innerText = section.charAt(0).toUpperCase() + section.slice(1);
+        }
+        
+        const ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: 'Sample Data',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

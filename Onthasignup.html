@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onthatile</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #3498db, #c0392b);
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        header {
+            background: #2c3e50;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        .signup-form,
+        .login-form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            color: #2c3e50;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            color: #2c3e50;
+        }
+
+        input {
+            width: 95%;
+            padding: 10px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #e74c3c;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #c0392b;
+        }
+
+        .login-form {
+            display: none; /* Hide login form by default */
+        }
+
+        .message {
+            margin: 20px 0;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .form-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .signup-form,
+            .login-form {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Onthatile</h1>
+    </header>
+    <div class="form-container">
+        <div class="signup-form">
+            <h2>Sign Up</h2>
+            <form id="signup-form">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required aria-label="Enter your username">
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required aria-label="Enter your email">
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required aria-label="Enter your password"><br>
+                
+                <button type="submit">Sign Up</button>
+                <div id="signup-message" class="message"></div>
+            </form>
+        </div>
+
+        <div class="login-form">
+            <h2>Login</h2>
+            <form id="login-form">
+                <label for="login-username">Username:</label>
+                <input type="text" id="login-username" name="login-username" required aria-label="Enter your login username">
+                
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" name="login-password" required aria-label="Enter your login password"><br>
+                
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const signupForm = document.getElementById('signup-form');
+        const signupMessage = document.getElementById('signup-message');
+
+        signupForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const emailInput = document.getElementById('email');
+            const email = emailInput.value;
+            const password = document.getElementById('password').value;
+
+            if (!validateEmail(email)) {
+                signupMessage.textContent = 'Please enter a valid Gmail address.';
+                emailInput.focus();
+            } else if (!validatePassword(password)) {
+                signupMessage.textContent = 'Password must be at least 8 characters long and contain at least one number.';
+            } else {
+                signupMessage.textContent = 'Registration successful!';
+                signupMessage.style.color = 'green';
+
+                signupForm.reset();
+
+                document.querySelector('.signup-form').style.display = 'none';
+                document.querySelector('.login-form').style.display = 'block';
+            }
+        });
+
+        function validateEmail(email) {
+            const regex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+            return regex.test(email);
+        }
+
+        function validatePassword(password) {
+            const regex = /^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$/;
+            return regex.test(password);
+        }
+    </script>
+</body>
+</html>
